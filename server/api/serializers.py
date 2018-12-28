@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 
-
+from api.models import *
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -28,15 +28,15 @@ class ImageSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('id', 'item', 'name', 'path', 'thumbnail', 'created', 'modified', 'enabled')
 
 
-class LocationSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Location
-        fields = ('id', 'name', 'longitude', 'latitude', 'created', 'modified', 'enabled')
+# class LocationSerializer(serializers.HyperlinkedModelSerializer):
+#     class Meta:
+#         model = Location
+#         fields = ('id', 'name', 'longitude', 'latitude', 'created', 'modified', 'enabled')
 
 
-class ItemSerializer(serializers.HyperlinkedModelSerializer):
+class ProductSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = Item
+        model = Product
         fields = ('id', 'seller', 'title', 'description', 'price', 'category', 'status', 'booked', 'course', 'approved', 'created', 'modified', 'enabled')
 
 
