@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-
+    # for resizing the making the thumbnail of images
+    # 'imagekit',
 ]
 
 MIDDLEWARE = [
@@ -75,13 +76,28 @@ WSGI_APPLICATION = 'server.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
-
+# mongodb://<dbuser>:<dbpassword>@ds151012.mlab.com:51012/profiledata
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    # }
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+            'ENGINE': 'djongo',
+            'NAME': 'profiledata',
+            'HOST': 'mongodb://admin:admin1@ds151012.mlab.com:51012/profiledata',
+            'PORT': 51012,
+            'USER': 'admin',
+            'PASSWORD': 'admin1',
+
     }
 }
+
+
+# AWS_ACCESS_KEY_ID
+# AWS_SECRET_ACCESS_KEY
+# AWS_STORAGE_BUCKET_NAME
+# AWS_DEFAULT_ACL
 
 
 # Password validation
@@ -121,3 +137,16 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+# Storing Media file in media folder
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+
+# using Django Storages
+# https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html
+
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+#
+# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'

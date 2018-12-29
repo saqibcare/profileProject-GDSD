@@ -3,6 +3,12 @@ from __future__ import unicode_literals
 from django.contrib.auth.models import User
 from django.db import models
 
+
+# importing for ImageKit django application for resizing of images
+
+# from imagekit.models import ImageSpecField, ProcessedImageField
+# from imagekit.processors import ResizeToFill
+
 # Create your models here.
 from pip._vendor.pyparsing import _defaultExceptionDebugAction
 
@@ -30,12 +36,15 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    def __Str__(self):
-        return str(self.name)
-
 
 class Image(models.Model):
-    url = models.CharField(max_length=5000)
+    image = models.FileField(blank=False, null=False, default='DEFAULT VALUE')
+    # thumbnail = ProcessedImageField(source='image',
+    #                                   upload_to='Thumbnail',
+    #                                   processors=[ResizeToFill(100, 50)],
+    #                                   format='JPEG',
+    #                                   options={'quality': 60})
+    displayImage = models.BooleanField(default=False)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
 #

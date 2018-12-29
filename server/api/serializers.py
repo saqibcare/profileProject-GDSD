@@ -13,19 +13,19 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 class CategorySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Category
-        fields = ('id', 'name', 'created', 'modified', 'enabled')
+        fields = ('title',)
 
 
-class GroupSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Group
-        fields = ('id', 'url', 'name')
-
-
+# class GroupSerializer(serializers.HyperlinkedModelSerializer):
+#     class Meta:
+#         model = Group
+#         fields = ('id', 'url', 'name')
+#
+#
 class ImageSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Image
-        fields = ('id', 'item', 'name', 'path', 'thumbnail', 'created', 'modified', 'enabled')
+        fields = ('id', 'image', 'product', 'displayImage')
 
 
 # class LocationSerializer(serializers.HyperlinkedModelSerializer):
@@ -37,6 +37,6 @@ class ImageSerializer(serializers.HyperlinkedModelSerializer):
 class ProductSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Product
-        fields = ('id', 'seller', 'title', 'description', 'price', 'category', 'status', 'booked', 'course', 'approved', 'created', 'modified', 'enabled')
+        fields = ('id', 'name', 'location', 'postedDate', 'description', 'price', 'status', 'sold', 'category')
 
 

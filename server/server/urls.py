@@ -17,14 +17,17 @@ from django.urls import include, path
 from django.conf.urls import url
 from django.contrib import admin
 from rest_framework import routers
+from django.conf import settings
+from django.conf.urls.static import static
 
 from api import views
 
 
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
-router.register(r'groups', views.)
-
+router.register(r'products', views.ProductViewSet)
+router.register(r'categories', views.CategoryViewSet)
+router.register(r'images', views.ImageViewSet)
 
 
 urlpatterns = [
@@ -32,3 +35,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     # path('', include('api.urls')),
 ]
+
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
