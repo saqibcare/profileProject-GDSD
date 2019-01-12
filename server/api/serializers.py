@@ -16,12 +16,12 @@ class CategorySerializer(serializers.HyperlinkedModelSerializer):
         fields = ('title',)
 
 
-# class GroupSerializer(serializers.HyperlinkedModelSerializer):
-#     class Meta:
-#         model = Group
-#         fields = ('id', 'url', 'name')
-#
-#
+class GroupSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Group
+        fields = ('id', 'url', 'name')
+
+
 class ImageSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Image
@@ -37,6 +37,18 @@ class ImageSerializer(serializers.HyperlinkedModelSerializer):
 class ProductSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Product
-        fields = ('id', 'name', 'location', 'postedDate', 'description', 'price', 'status', 'sold', 'category')
+        fields = ('id', 'name', 'location', 'postedDate', 'description', 'price', 'status', 'sold', 'category', 'owner')
+
+
+class MessageSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Messages
+        fields = ('id', 'sender', 'receiver', 'text', 'dateTime')
+
+
+class WishListSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = WishList
+        fields = ('id', 'product', 'customer')
 
 

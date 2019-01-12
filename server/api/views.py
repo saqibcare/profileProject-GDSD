@@ -7,6 +7,11 @@ from django.shortcuts import render
 
 
 # Create your views here.
+class GroupViewSet(viewsets.ModelViewSet):
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
+
+
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
@@ -32,3 +37,11 @@ class ImageViewSet(viewsets.ModelViewSet):
         obj.image = self.request.FILES.get('file')
 
 
+class MessageViewSet(viewsets.ModelViewSet):
+    queryset = Messages.objects.all()
+    serializer_class = MessageSerializer
+
+
+class WishListViewSet(viewsets.ModelViewSet):
+    queryset = WishList.objects.all()
+    serializer_class = WishListSerializer
