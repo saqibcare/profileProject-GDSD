@@ -20,14 +20,18 @@ from rest_framework import routers
 from django.conf import settings
 from django.conf.urls.static import static
 
+# authentication & login (Token generation)
+from rest_framework.authtoken.views import obtain_auth_token
+from django.contrib.auth.views import LoginView
+
 # import for the swagger Ui
-from rest_framework.schemas import get_schema_view
-from rest_framework_swagger.renderers import SwaggerUIRenderer, OpenAPIRenderer
+# from rest_framework.schemas import get_schema_view
+# from rest_framework_swagger.renderers import SwaggerUIRenderer, OpenAPIRenderer
 
 
 from api import views
 
-schema_view = get_schema_view(title='Django Rest Framework Backend', renderer_classes=[OpenAPIRenderer, SwaggerUIRenderer])
+# schema_view = get_schema_view(title='Django Rest Framework Backend', renderer_classes=[OpenAPIRenderer, SwaggerUIRenderer])
 
 
 router = routers.DefaultRouter()
@@ -41,10 +45,14 @@ router.register(r'wishlist', views.WishListViewSet)
 
 
 urlpatterns = [
-    url(r'^', schema_view, name="docs"), # used for the swagger
+    # url(r'^', schema_view, name="docs"), # used for the swagger
     url(r'^', include(router.urls)),
     url(r'^admin/', admin.site.urls),
     # path('', include('api.urls')),
+
+    # Authentication login and token-generation links
+    path('api-token-auth/', obtain_auth_token, name='api-token-auth'),
+    path('login/', LoginView, name='login')
 ]
 
 
