@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.contrib.auth.models import User, Group
+from rest_framework.decorators import detail_route, list_route
+from rest_framework.response import Response
+
 from api.serializers import *
 from rest_framework import viewsets, filters, generics
 from django.shortcuts import render
@@ -19,6 +22,7 @@ class GroupViewSet(viewsets.ModelViewSet):
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
+    filter_backends = (filters.OrderingFilter, )
     ordering_fields = ('username', 'email')
 
 
@@ -31,9 +35,10 @@ class ProductViewSet(viewsets.ModelViewSet):
     # permission_classes = (IsAuthenticatedOrReadOnly,)
     queryset = Product.objects.all().filter(sold=False).order_by('postedDate')
     serializer_class = ProductSerializer
-    ordering_fields = ('postedDate',)
-    filter_backends = (DjangoFilterBackend,)
+    filter_backends = (DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter,)
+    ordering_fields = ('price', 'postedDate', 'name')
     filter_fields = ('status', 'sold', 'category__title', 'owner__username')
+    search_fields = ('name',)
 
 
 class ImageViewSet(viewsets.ModelViewSet):
@@ -52,14 +57,7 @@ class MessageViewSet(viewsets.ModelViewSet):
     filter_backends = (DjangoFilterBackend,)
     filter_fields = ('sender__username', 'receiver__username')
 
-# class MessageViewSet(filters.BaseFilterBackend):
-#     """
-#     Filter that only allows users to see their own objects.
-#     """
-#     queryset = Messages.objects.all()
-#     def filter_queryset(self, request, queryset, view):
-#         # queryset = Messages.objects.all()
-#         return queryset.filter(owner=request.user)
+
 
 
 class WishListViewSet(viewsets.ModelViewSet):
@@ -67,4 +65,43 @@ class WishListViewSet(viewsets.ModelViewSet):
     queryset = WishList.objects.all()
     serializer_class = WishListSerializer
     filter_backends = (DjangoFilterBackend,)
-    filter_fields = 'customer__username'
+    filter_fields = ('customer',)
+
+
+class ProductSortingView(viewsets.ModelViewSet):
+    # permission_classes = (IsAuthenticatedOrReadOnly,)
+    queryset = Product.objects.all().filter(sold=False).order_by('postedDate')
+    serializer_class = ProductSerializer
+    filter_backends = (DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter,)
+    ordering_fields = ('price', 'postedDate', 'name')
+    filter_fields = ('status', 'sold', 'category__title', 'owner__username')
+    search_fields = ('name',)
+
+   #
+   #  def id_list(self, request):
+   #      q = self.get_queryset().values('price')
+   #
+   #      l = Response(list(q))
+   #
+   # # Swap the elements to arrange in order
+   #      for iter_num in range(len(l) - 1, 0, -1):
+   #          for idx in range(iter_num):
+   #              if l[idx] > l[idx + 1]:
+   #                  temp = l[idx]
+   #                  l[idx] = l[idx + 1]
+   #                  l[idx + 1] = temp
+   #
+   #      return l #returing sorted list on the base of id
+   #
+   #  def name_Sort(self, request):
+   #      lst = self.get_queryset().values('name')
+   #      if not lst:
+   #          return []
+   #          return (name_Sort([x for x in lst[1:] if x < lst[0]])
+   #              + [lst[0]] +
+   #              name_Sort([x for x in lst[1:] if x >= lst[0]]))
+   #
+   #      return lst #done sort here alphabetically order
+   #
+
+
